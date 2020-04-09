@@ -1,2 +1,2 @@
 # Typper
-Speed Typing React App
+Speed Typing Game - React App
