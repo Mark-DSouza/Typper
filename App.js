@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect} from 'react'
+import React, {Fragment, useState, useEffect, useRef} from 'react'
 
 function App() {
     const STARTING_TIME = 15;
@@ -7,7 +7,9 @@ function App() {
     const [timer, setTimer] = useState(STARTING_TIME);
     const [gameActive, setGameActive] = useState(false);
     const [wordCount, setWordCount] = useState(0);
-    // const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+    const textBoxRef =  useRef(null);
+
     
     function handleChange(event) {
         setText(event.target.value);
@@ -17,13 +19,13 @@ function App() {
         setGameActive(prevGameActive => !prevGameActive);
         setText("");
         setTimer(STARTING_TIME);
-        // setIsButtonDisabled(true);
+        textBoxRef.current.disabled = false;
+        textBoxRef.current.focus();
     }
 
     function endGame() {
         setGameActive(false);
         setWordCount(calculateWordCount(text));
-        // setIsButtonDisabled(false);
     }
 
     function calculateWordCount(text) {
@@ -46,7 +48,7 @@ function App() {
     return (
         <Fragment>
             <h1>How fast do you type?</h1>
-            <textarea value={text} onChange={handleChange} disabled={!gameActive}/>
+            <textarea ref={textBoxRef} value={text} onChange={handleChange} disabled={!gameActive}/>
             <h4>Time Remaining: {timer}</h4>
             <button onClick={startGame} disabled={gameActive}>Start</button>
             <h1>Word Count: {wordCount}</h1>
