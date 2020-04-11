@@ -1,49 +1,17 @@
-import React, {Fragment, useState, useEffect, useRef} from 'react'
+import React, {Fragment} from 'react';
+
+import useWordGame from './hooks/useWordGame';
 
 function App() {
-    const STARTING_TIME = 15;
-
-    const [text, setText] = useState("");
-    const [timer, setTimer] = useState(STARTING_TIME);
-    const [gameActive, setGameActive] = useState(false);
-    const [wordCount, setWordCount] = useState(0);
-
-    const textBoxRef =  useRef(null);
-
-    
-    function handleChange(event) {
-        setText(event.target.value);
-    }
-
-    function startGame() {
-        setGameActive(prevGameActive => !prevGameActive);
-        setText("");
-        setTimer(STARTING_TIME);
-        textBoxRef.current.disabled = false;
-        textBoxRef.current.focus();
-    }
-
-    function endGame() {
-        setGameActive(false);
-        setWordCount(calculateWordCount(text));
-    }
-
-    function calculateWordCount(text) {
-        const wordsArray = text.trim().split(" ");
-        return wordsArray.filter(word => word !== "").length;
-    }
-
-    useEffect(() => {
-        if (timer > 0 && gameActive) {
-            setTimeout(() => {
-                setTimer(prevTimer => prevTimer - 1)
-            }, 1000)
-        }
-
-        else if (timer === 0) {
-            endGame();
-        }
-    }, [timer, gameActive]);
+    const {
+        textBoxRef, 
+        text, 
+        handleChange, 
+        gameActive, 
+        timer, 
+        startGame, 
+        wordCount
+    } = useWordGame(15);
 
     return (
         <Fragment>

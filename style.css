@@ -12,11 +12,6 @@ body {
     font-weight: 400;
 }
 
-.button {
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 1px;
-}
  button {
     font-family: 'Press Start 2P', cursive;
     display: block;
